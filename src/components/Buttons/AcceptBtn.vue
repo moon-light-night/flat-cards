@@ -1,20 +1,18 @@
 <template>
-  <button class="btn-accept" @click="setFilter">
+  <button class="btn-accept" @click="handleAction">
     <slot />
   </button>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
-@Component
-export default class AcceptBtn extends Vue {
-  @Prop() private msg!: string;
-
-  message = 'Hello!'
-
-  setFilter(): void {
-    console.log(this.msg);
+@Component({
+  methods: {
+    handleAction() {
+      this.$emit('handleAction');
+    }
   }
-}
+})
+export default class AcceptBtn extends Vue {}
 </script>

@@ -36,7 +36,7 @@
     </span>, млн.р.
     </FilterRange>
     <div class="filters-btns">
-      <AcceptBtn :msg="'hi!'">Применить</AcceptBtn>
+      <AcceptBtn @handleAction="filterCards">Применить</AcceptBtn>
       <CancelBtn>Сбросить фильтр</CancelBtn>
     </div>
   </div>
@@ -68,7 +68,8 @@ import data from '@/assets/data/data.json';
       price: [0, 0],
       room: []
     },
-    rooms: []
+    rooms: [],
+    filteredRooms: []
   }),
   created() {
     const floors: number[] = [];
@@ -103,6 +104,14 @@ import data from '@/assets/data/data.json';
     },
     setSelectValues(val) {
       this.$data.filters.room = val;
+    },
+    filterCards() {
+      const filtered = data.filter((el) => (
+        (el.floor >= this.$data.filters.flat[0] && el.floor <= this.$data.filters.flat[1])
+        && ((el.square).toFixed() >= this.$data.filters.square[0] && (el.square).toFixed() <= this.$data.filters.square[1])
+        && (((+Math.round(el.price / 1000000) * 10) / 10) >= (this.$data.filters.price[0]) && ((+Math.round(el.price / 1000000) * 10) / 10) <= Math.round(this.$data.filters.price[1]))
+      ));
+      console.log(filtered);
     }
   }
 })
