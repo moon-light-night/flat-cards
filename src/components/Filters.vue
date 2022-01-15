@@ -8,6 +8,7 @@
       Комнаты
     </span>
     </FilterSelect>
+    <span class="filter-tip" />
     <FilterRange
       v-if="renderComponent"
       :filter="flatFilterInit"
@@ -19,6 +20,7 @@
       Этаж
     </span>
     </FilterRange>
+    <span class="filter-tip" />
     <FilterRange
       v-if="renderComponent"
       :filter="squareFilterInit"
@@ -28,8 +30,9 @@
     >
     <span style="text-transform:uppercase;">
       Площадь
-    </span>, м2
+    </span>, м<sup>2</sup>
     </FilterRange>
+    <span class="filter-tip" />
     <FilterRange
       v-if="renderComponent"
       :filter="priceFilterInit"
@@ -41,6 +44,7 @@
       Стоимость
     </span>, млн.р.
     </FilterRange>
+    <span class="filter-tip" />
     <div class="filters-btns">
       <AcceptBtn @handleAction="filterCards">Применить</AcceptBtn>
       <CancelBtn @handleAction="clearFilters">Сбросить фильтр</CancelBtn>
@@ -55,7 +59,7 @@ import FilterSelect from '@/components/FilterSelect.vue'
 import AcceptBtn from '@/components/Buttons/AcceptBtn.vue'
 import CancelBtn from '@/components/Buttons/CancelBtn.vue'
 import data from '@/assets/data/data.json'
-import { eventBus } from '../main'
+import { eventBus } from '@/main'
 
 @Component({
   components: {
@@ -125,6 +129,7 @@ import { eventBus } from '../main'
         (el.floor >= this.$data.filters.flat[0] && el.floor <= this.$data.filters.flat[1])
         && ((el.square).toFixed() >= this.$data.filters.square[0] && (el.square).toFixed() <= this.$data.filters.square[1])
         && (((+Math.round(el.price / 1000000) * 10) / 10) >= (this.$data.filters.price[0]) && ((+Math.round(el.price / 1000000) * 10) / 10) <= Math.round(this.$data.filters.price[1]))
+        && (this.$data.filters.room.length ? this.$data.filters.room.includes(el.rooms) : el.rooms)
       ))
       this.$store.commit('setFilteredCards', this.$data.filteredCards)
       console.log(this.$data.filteredCards)
@@ -132,8 +137,9 @@ import { eventBus } from '../main'
     clearFilters() {
       this.$data.filters.flat = this.$data.flatFilterInit
       this.$data.filters.square = this.$data.squareFilterInit
-      this.$data.filters.prices = this.$data.priceFilterInit;
-      // eventBus.$emit('clearFilter')
+      this.$data.filters.prices = this.$data.priceFilterInit
+      this.$data.filters.room = []
+      eventBus.$emit('clearSelectValues')
       this.$data.renderComponent = false
       this.$nextTick(() => {
         this.$data.renderComponent = true

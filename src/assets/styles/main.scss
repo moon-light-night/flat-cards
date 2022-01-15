@@ -72,8 +72,16 @@ select {
   margin: 0 auto;
 }
 
-.slider-tooltip {
-  display: none !important;
+.slider {
+  height: 2px !important;
+  &-tooltip {
+    display: none !important;
+  }
+}
+.vue-range-slider.slider-component.slider-horizontal .slider-dot {
+  top: -9px !important;
+  width: 16px !important;
+  height: 16px !important;
 }
 .vue-range-slider.slider-component .slider .slider-process {
   background-color: #70D24E !important;
@@ -99,7 +107,6 @@ select {
   }
   &:checked~span {
     position: absolute;
-    left: 0;
     top: 0;
     width: 101%;
     height: 100%;
@@ -129,14 +136,17 @@ select {
     color: #FFFFFF;
     border: none;
     border-radius: 5px;
-    margin: 0 0 5px;
+    margin: 0 0 15px;
     cursor: pointer;
+    transition-duration: 0.1s;
+    &:hover {
+      box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.1);
+    }
   }
   &-cancel {
     background: none;
     border: none;
     font-size: 10px;
-    line-height: 28px;
     text-transform: uppercase;
     border-bottom: 1px solid transparent;
     color: #2C323A;
@@ -169,6 +179,12 @@ select {
     line-height: 28px;
     color: #2C323A;
   }
+  &-tip {
+    width: 1px;
+    height: 20px;
+    margin-top: 40px;
+    background: #EBEBEB;
+  }
   &-value {
     &_wrap {
       display: flex;
@@ -183,8 +199,11 @@ select {
       align-items: center;
       justify-content: center;
       text-align: center;
+      font-weight: normal;
+      font-size: 16px;
       border-radius: 5px;
       border: 1px solid #D8D8D8;
+      cursor: default;
     }
   }
   &-select {
@@ -234,7 +253,9 @@ select {
   box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.05);
   border-radius: 10px;
   margin: 0 0 30px;
+  transition-duration: 0.1s;
   &:hover {
+    box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.25);
     .card-body img {
       width: 70%;
       height: 70%;

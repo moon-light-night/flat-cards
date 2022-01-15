@@ -17,6 +17,8 @@ module.exports = {
     'comma-dangle': ['error', 'never'],
     'no-multi-assign': 0,
     'semi': 0,
+    'no-return-assign': 0,
+    'no-else-return': 0,
     'import/prefer-default-export': 0,
     'max-len': ["error", { "code": 200 }],
   },

@@ -28,28 +28,27 @@
 </template>
 
 <script lang="ts">
+import { eventBus } from '@/main'
 import {
   Component,
-  Emit,
   Prop,
-  Vue,
-  Watch
-} from 'vue-property-decorator';
+  Vue
+} from 'vue-property-decorator'
 
-@Component
+@Component({
+  data: () => ({
+    checkedValues: []
+  }),
+  mounted() {
+    eventBus.$on('clearSelectValues', () => (this.$data.checkedValues = []))
+  },
+  watch: {
+    checkedValues() {
+      this.$emit('handleSelectValues', this.$data.checkedValues)
+    }
+  }
+})
 export default class FilterSelect extends Vue {
   @Prop() private rooms!: Record<number, number>
-
-  checkedValues = []
-
-  @Watch('checkedValues')
-  onPropertyChanged(): void {
-    this.handleSelectValues();
-  }
-
-  @Emit('handleSelectValues')
-  handleSelectValues(): Record<number, number> {
-    return this.checkedValues;
-  }
 }
 </script>

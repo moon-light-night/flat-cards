@@ -2,24 +2,24 @@
   <div class="card">
     <div class="card-header">
       <div class="card-header_item half-opacity">
-        3 этаж
+        {{ `${card.floor} этаж` }}
       </div>
       <div class="card-header_item">
-        1 комната - 22.94 м2
+        {{ card.rooms | pluralize(['комната', 'комнаты', 'комнат']) }} - {{ `${card.square} м` }}<sup>2</sup>
       </div>
     </div>
     <div class="card-body">
       <span class="card-body_num">
-        № 256
+        {{ `№ ${card.building_id}` }}
       </span>
       <img src="@/assets/card-image.png" alt="card-image">
     </div>
     <div class="card-footer">
       <div class="card-footer_sum">
-        {{ (2729860).toLocaleString() + 'р.' }}
+        {{ `${(card.price).toLocaleString()} р.` }}
       </div>
-      <div class="card-footer_subsum">
-        {{ (119000).toLocaleString() + 'р. за м2' }}
+      <div class="card-footer_subsum half-opacity">
+        {{ `${(+(card.price / card.square).toFixed()).toLocaleString()} р. за м` }}<sup>2</sup>
       </div>
     </div>
     <div class="card-info">
