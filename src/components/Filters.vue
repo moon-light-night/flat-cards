@@ -46,8 +46,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 import FilterRange from '@/components/FilterRange.vue';
 import FilterSelect from '@/components/FilterSelect.vue';
-import AcceptBtn from '@/components/AcceptBtn.vue';
-import CancelBtn from '@/components/CancelBtn.vue';
+import AcceptBtn from '@/components/Buttons/AcceptBtn.vue';
+import CancelBtn from '@/components/Buttons/CancelBtn.vue';
 import data from '@/assets/data/data.json';
 
 @Component({

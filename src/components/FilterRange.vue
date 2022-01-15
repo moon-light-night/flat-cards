@@ -47,7 +47,7 @@ import VueRangeSlider from 'vue-range-component';
   }
 })
 export default class FilterRange extends Vue {
-  @Prop() private filter!: Record<number, number>
+  @Prop() private filter!: Array<number>
 
   @Prop() private step!: number
 
