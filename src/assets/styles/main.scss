@@ -60,13 +60,16 @@ select {
 }
 
 #app {
-  max-width: 1170px;
   width: 100%;
   margin: 0 auto;
   padding: 38px;
   background-color: #F8F8F8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.home {
+  max-width: 1170px;
+  margin: 0 auto;
 }
 
 .slider-tooltip {
@@ -207,6 +210,13 @@ select {
     }
   }
 }
+.cards {
+  &-wrap {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
 .card {
   width: auto;
   position: relative;
@@ -218,6 +228,7 @@ select {
   background: #FFFFFF;
   box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.05);
   border-radius: 10px;
+  margin: 0 0 30px;
   &:hover {
     .card-body img {
       width: 70%;

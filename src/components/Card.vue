@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import InfoBtn from '@/components/Buttons/InfoBtn.vue';
 
 @Component({
@@ -37,5 +37,7 @@ import InfoBtn from '@/components/Buttons/InfoBtn.vue';
     InfoBtn
   }
 })
-export default class Card extends Vue {}
+export default class Card extends Vue {
+  @Prop() private card!: Record<string, unknown>
+}
 </script>

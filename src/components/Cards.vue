@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <Card />
+  <div class="cards-wrap">
+    <Card
+      v-for="card in mockData"
+      :key="card.building_id + card.id"
+      :card="card"
+    />
   </div>
 </template>
 
