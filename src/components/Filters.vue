@@ -9,27 +9,33 @@
     </span>
     </FilterSelect>
     <FilterRange
+      v-if="renderComponent"
       :filter="flatFilterInit"
       :step="1"
       @handleFilter="setFlats"
+      ref="custom"
     >
     <span style="text-transform:uppercase;">
       Этаж
     </span>
     </FilterRange>
     <FilterRange
+      v-if="renderComponent"
       :filter="squareFilterInit"
       :step="1"
       @handleFilter="setSquares"
+      ref="custom"
     >
     <span style="text-transform:uppercase;">
       Площадь
     </span>, м2
     </FilterRange>
     <FilterRange
+      v-if="renderComponent"
       :filter="priceFilterInit"
       :step="0.1"
       @handleFilter="setPrices"
+      ref="custom"
     >
     <span style="text-transform:uppercase;">
       Стоимость
@@ -37,18 +43,19 @@
     </FilterRange>
     <div class="filters-btns">
       <AcceptBtn @handleAction="filterCards">Применить</AcceptBtn>
-      <CancelBtn>Сбросить фильтр</CancelBtn>
+      <CancelBtn @handleAction="clearFilters">Сбросить фильтр</CancelBtn>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import FilterRange from '@/components/FilterRange.vue';
-import FilterSelect from '@/components/FilterSelect.vue';
-import AcceptBtn from '@/components/Buttons/AcceptBtn.vue';
-import CancelBtn from '@/components/Buttons/CancelBtn.vue';
-import data from '@/assets/data/data.json';
+import { Component, Vue } from 'vue-property-decorator'
+import FilterRange from '@/components/FilterRange.vue'
+import FilterSelect from '@/components/FilterSelect.vue'
+import AcceptBtn from '@/components/Buttons/AcceptBtn.vue'
+import CancelBtn from '@/components/Buttons/CancelBtn.vue'
+import data from '@/assets/data/data.json'
+import { eventBus } from '../main'
 
 @Component({
   components: {
@@ -69,49 +76,69 @@ import data from '@/assets/data/data.json';
       room: []
     },
     rooms: [],
-    filteredRooms: []
+    filteredRooms: [],
+    filteredCards: [],
+    renderComponent: true
   }),
   created() {
-    const floors: number[] = [];
-    const squares: number[] = [];
-    const prices: number[] = [];
-    const rooms: Set<number> = new Set([]);
+    const floors: number[] = []
+    const squares: number[] = []
+    const prices: number[] = []
+    const rooms: Set<number> = new Set([])
     data.forEach((el) => {
-      floors.push(el.floor);
-      squares.push(el.square);
-      prices.push(el.price);
-      rooms.add(el.rooms);
-    });
-    this.$data.rooms = rooms;
-    [this.$data.flatFilterInit[0], this.$data.filters.flat[0]] = [Math.min(...floors), Math.min(...floors)];
-    [this.$data.flatFilterInit[1], this.$data.filters.flat[1]] = [Math.max(...floors), Math.max(...floors)];
-    this.$data.roomFilterInit[0] = Math.min(...rooms);
-    this.$data.roomFilterInit[1] = Math.max(...rooms);
-    [this.$data.squareFilterInit[0], this.$data.filters.square[0]] = [+(Math.min(...squares)).toFixed(), +(Math.min(...squares)).toFixed()];
-    [this.$data.squareFilterInit[1], this.$data.filters.square[1]] = [+(Math.max(...squares)).toFixed(), +(Math.max(...squares)).toFixed()];
-    [this.$data.priceFilterInit[0], this.$data.filters.price[0]] = [(+Math.floor((Math.min(...prices) / 1000000) * 10) / 10), (+Math.floor((Math.min(...prices) / 1000000) * 10) / 10)];
-    [this.$data.priceFilterInit[1], this.$data.filters.price[1]] = [(+Math.floor((Math.max(...prices) / 1000000) * 10) / 10), (+Math.floor((Math.max(...prices) / 1000000) * 10) / 10)];
+      floors.push(el.floor)
+      squares.push(el.square)
+      prices.push(el.price)
+      rooms.add(el.rooms)
+    })
+    this.$data.rooms = rooms
+    this.$data.flatFilterInit[0] = this.$data.filters.flat[0] = Math.min(...floors)
+    this.$data.flatFilterInit[1] = this.$data.filters.flat[1] = Math.max(...floors)
+    this.$data.roomFilterInit[0] = Math.min(...rooms)
+    this.$data.roomFilterInit[1] = Math.max(...rooms)
+    this.$data.squareFilterInit[0] = this.$data.filters.square[0] = (+(Math.min(...squares)).toFixed())
+    this.$data.squareFilterInit[1] = this.$data.filters.square[1] = (+(Math.max(...squares)).toFixed())
+    this.$data.priceFilterInit[0] = this.$data.filters.price[0] = (+Math.floor((Math.min(...prices) / 1000000) * 10) / 10)
+    this.$data.priceFilterInit[1] = this.$data.filters.price[1] = (+Math.floor((Math.max(...prices) / 1000000) * 10) / 10)
   },
   methods: {
     setFlats(val) {
-      this.$data.filters.flat = val;
+      this.$data.filters.flat = val
     },
     setSquares(val) {
-      this.$data.filters.square = val;
+      this.$data.filters.square = val
     },
     setPrices(val) {
-      this.$data.filters.price = val;
+      this.$data.filters.price = val
     },
     setSelectValues(val) {
-      this.$data.filters.room = val;
+      this.$data.filters.room = val
+    },
+    forceRerender() {
+      this.$data.renderComponent = false
+      this.$nextTick(() => {
+        this.$data.renderComponent = true
+      })
     },
     filterCards() {
-      const filtered = data.filter((el) => (
+      this.$data.filteredCards = data.filter((el) => (
         (el.floor >= this.$data.filters.flat[0] && el.floor <= this.$data.filters.flat[1])
         && ((el.square).toFixed() >= this.$data.filters.square[0] && (el.square).toFixed() <= this.$data.filters.square[1])
         && (((+Math.round(el.price / 1000000) * 10) / 10) >= (this.$data.filters.price[0]) && ((+Math.round(el.price / 1000000) * 10) / 10) <= Math.round(this.$data.filters.price[1]))
-      ));
-      console.log(filtered);
+      ))
+      this.$store.commit('setFilteredCards', this.$data.filteredCards)
+      console.log(this.$data.filteredCards)
+    },
+    clearFilters() {
+      this.$data.filters.flat = this.$data.flatFilterInit
+      this.$data.filters.square = this.$data.squareFilterInit
+      this.$data.filters.prices = this.$data.priceFilterInit;
+      // eventBus.$emit('clearFilter')
+      this.$data.renderComponent = false
+      this.$nextTick(() => {
+        this.$data.renderComponent = true
+      })
+      this.$store.commit('clearFilteredCards')
     }
   }
 })

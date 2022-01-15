@@ -129,16 +129,21 @@ select {
     color: #FFFFFF;
     border: none;
     border-radius: 5px;
+    margin: 0 0 5px;
     cursor: pointer;
   }
   &-cancel {
     background: none;
     border: none;
-    border-bottom: 1px solid #70D24E;
     font-size: 10px;
     line-height: 28px;
     text-transform: uppercase;
+    border-bottom: 1px solid transparent;
     color: #2C323A;
+    cursor: pointer;
+    &:hover {
+      border-color: #70D24E;
+    }
   }
 }
 .filters {

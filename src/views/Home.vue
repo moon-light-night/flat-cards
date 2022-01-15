@@ -17,6 +17,9 @@ import Cards from '@/components/Cards.vue';
   components: {
     Filters,
     Cards
+  },
+  created() {
+    this.$store.dispatch('fetchMockData')
   }
 })
 export default class Home extends Vue {}

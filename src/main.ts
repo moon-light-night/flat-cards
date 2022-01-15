@@ -4,6 +4,8 @@ import router from './router';
 import store from './store';
 import './assets/styles/main.scss';
 
+export const eventBus = new Vue();
+
 Vue.config.productionTip = false;
 
 new Vue({

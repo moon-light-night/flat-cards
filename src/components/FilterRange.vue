@@ -15,6 +15,7 @@
       </div>
     </div>
     <VueRangeSlider
+      ref="slider"
       :min="filter[0]"
       :max="filter[1]"
       :step="step"
@@ -31,9 +32,9 @@ import {
   Watch,
   Emit,
   Vue
-} from 'vue-property-decorator';
-import 'vue-range-component/dist/vue-range-slider.css';
-import VueRangeSlider from 'vue-range-component';
+} from 'vue-property-decorator'
+import 'vue-range-component/dist/vue-range-slider.css'
+import VueRangeSlider from 'vue-range-component'
 
 @Component({
   components: {
@@ -43,7 +44,7 @@ import VueRangeSlider from 'vue-range-component';
     sliderValue: []
   }),
   mounted() {
-    this.$data.sliderValue = this.$props.filter;
+    this.$data.sliderValue = this.$props.filter
   }
 })
 export default class FilterRange extends Vue {
@@ -53,22 +54,12 @@ export default class FilterRange extends Vue {
 
   @Watch('filter')
   onPropertyChanged(): void {
-    this.$data.sliderValue[0] = this.filter;
+    this.$data.sliderValue[0] = this.filter
   }
 
   @Emit('handleFilter')
   handleFilter(): Record<number, number> {
-    return this.$data.sliderValue;
-  }
-
-  a = 'test!!'
-
-  show(): void {
-    console.log(this.filter);
-  }
-
-  test(): void {
-    console.log(this.a);
+    return this.$data.sliderValue
   }
 }
 </script>

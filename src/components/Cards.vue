@@ -1,7 +1,7 @@
 <template>
   <div class="cards-wrap">
     <Card
-      v-for="card in mockData"
+      v-for="card in filteredCards"
       :key="card.building_id + card.id"
       :card="card"
     />
@@ -9,20 +9,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Card from '@/components/Card.vue';
+import { Component, Vue } from 'vue-property-decorator'
+import Card from '@/components/Card.vue'
 
 @Component({
   components: {
     Card
   },
-  data: () => ({
-    mockData: null
-  }),
-  created() {
-    this.$store.dispatch('fetchMockData');
-    this.$data.mockData = this.$store.getters.mockData;
-    console.log(this.$data.mockData);
+  computed: {
+    filteredCards() {
+      return this.$store.getters.filteredCards
+    }
   }
 })
 export default class Cards extends Vue {}
