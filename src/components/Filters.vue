@@ -1,50 +1,52 @@
 <template>
   <div class="filters">
-    <FilterSelect
-      :rooms="rooms"
-      @handleSelectValues="setSelectValues"
-    >
-    <span style="text-transform:uppercase;">
-      Комнаты
-    </span>
-    </FilterSelect>
-    <span class="filter-tip" />
-    <FilterRange
-      v-if="renderComponent"
-      :filter="flatFilterInit"
-      :step="1"
-      @handleFilter="setFlats"
-      ref="custom"
-    >
-    <span style="text-transform:uppercase;">
-      Этаж
-    </span>
-    </FilterRange>
-    <span class="filter-tip" />
-    <FilterRange
-      v-if="renderComponent"
-      :filter="squareFilterInit"
-      :step="1"
-      @handleFilter="setSquares"
-      ref="custom"
-    >
-    <span style="text-transform:uppercase;">
-      Площадь
-    </span>, м<sup>2</sup>
-    </FilterRange>
-    <span class="filter-tip" />
-    <FilterRange
-      v-if="renderComponent"
-      :filter="priceFilterInit"
-      :step="0.1"
-      @handleFilter="setPrices"
-      ref="custom"
-    >
-    <span style="text-transform:uppercase;">
-      Стоимость
-    </span>, млн.р.
-    </FilterRange>
-    <span class="filter-tip" />
+    <div class="filters-items">
+      <FilterSelect
+        :rooms="rooms"
+        @handleSelectValues="setSelectValues"
+      >
+      <span style="text-transform:uppercase;">
+        Комнаты
+      </span>
+      </FilterSelect>
+      <span class="filter-tip" />
+      <FilterRange
+        v-if="renderComponent"
+        :filter="flatFilterInit"
+        :step="1"
+        @handleFilter="setFlats"
+        ref="custom"
+      >
+      <span style="text-transform:uppercase;">
+        Этаж
+      </span>
+      </FilterRange>
+      <span class="filter-tip" />
+      <FilterRange
+        v-if="renderComponent"
+        :filter="squareFilterInit"
+        :step="1"
+        @handleFilter="setSquares"
+        ref="custom"
+      >
+      <span style="text-transform:uppercase;">
+        Площадь
+      </span>, м<sup>2</sup>
+      </FilterRange>
+      <span class="filter-tip" />
+      <FilterRange
+        v-if="renderComponent"
+        :filter="priceFilterInit"
+        :step="0.1"
+        @handleFilter="setPrices"
+        ref="custom"
+      >
+      <span style="text-transform:uppercase;">
+        Стоимость
+      </span>, млн.р.
+      </FilterRange>
+      <span class="filter-tip filter-tip_last" />
+    </div>
     <div class="filters-btns">
       <AcceptBtn @handleAction="filterCards">Применить</AcceptBtn>
       <CancelBtn @handleAction="clearFilters">Сбросить фильтр</CancelBtn>

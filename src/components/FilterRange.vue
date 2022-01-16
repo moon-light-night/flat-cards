@@ -10,7 +10,7 @@
       <span class="tips">
         -
       </span>
-      <div class="filter-value_display">
+      <div class="filter-value_display display-tip">
         {{ sliderValue[1] }}
       </div>
     </div>
