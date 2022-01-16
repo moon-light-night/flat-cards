@@ -1,5 +1,10 @@
 # flat-cards
 
+## Project view
+```
+https://flat-cards.web.app
+```
+
 ## Project setup
 ```
 npm install
