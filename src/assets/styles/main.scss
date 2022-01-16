@@ -37,6 +37,7 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  background-color: #f8f8f8;
 }
 
 ul[class],
@@ -67,12 +68,12 @@ select {
 #app {
   width: 100%;
   margin: 0 auto;
-  height: 100%;
-  min-height: 100vh;
+  // height: 100%;
+  // min-height: 100vh;
   padding: 38px;
-  background-color: #F8F8F8;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  // background-color: #F8F8F8;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
 }
 .home {
   max-width: 1170px;

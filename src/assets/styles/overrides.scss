@@ -10,6 +10,12 @@
   width: 16px !important;
   height: 16px !important;
 }
+.vue-range-slider.slider-component .slider .slider-dot .slider-dot-handle {
+  display: none;
+}
+.vue-range-slider.slider-component.slider-horizontal .slider-dot {
+  border-radius: 50%;
+}
 .vue-range-slider.slider-component .slider .slider-process {
   background-color: #70D24E !important;
 }
